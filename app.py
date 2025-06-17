@@ -9,7 +9,11 @@ CORS(app)
 # Load FAQ data once
 with open('faq.json', encoding='utf-8') as f:
     faq_data = json.load(f)
-
+    
+@app.route('/')
+def home():
+    return 'Backend is working!'
+    
 @app.route('/get_response', methods=['POST'])
 def get_response():
     user_message = request.json.get('message', '').lower()
