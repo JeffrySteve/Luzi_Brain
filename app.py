@@ -2,20 +2,20 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
 import os
-from flask_cors import CORS
-CORS(app, resources={r"/*": {"origins": "*"}})
 
 app = Flask(__name__)
-CORS(app)
+
+#  Apply proper CORS config after creating app
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Load FAQ data once
 with open('faq.json', encoding='utf-8') as f:
     faq_data = json.load(f)
-    
+
 @app.route('/')
 def home():
     return 'Backend is working!'
-    
+
 @app.route('/get_response', methods=['POST'])
 def get_response():
     user_message = request.json.get('message', '').lower()
@@ -27,8 +27,6 @@ def get_response():
             break
 
     return jsonify({'response': response})
-
-import os
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
